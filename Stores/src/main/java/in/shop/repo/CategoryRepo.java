@@ -2,14 +2,17 @@ package in.shop.repo;
 
 import java.util.Optional;
 
+import in.shop.entity.CategoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
 import in.shop.entity.UserEntity;
 
-public interface CategoryRepo extends JpaRepository<UserEntity, Long>{
+public interface CategoryRepo extends JpaRepository<CategoryEntity, Long>{
 
 	 boolean existsByName(String name);
 	 
-	 Optional<UserEntity> findByCategoryId(String categoryId );
+	 Optional<CategoryEntity> findByCategoryId(String categoryId );
+
+
 }

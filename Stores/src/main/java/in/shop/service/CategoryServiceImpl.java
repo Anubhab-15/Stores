@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryServiceimpl implements CategoryService {
+public class CategoryServiceImpl implements CategoryService {
 
    
      private final CategoryRepo repo;
@@ -29,25 +29,24 @@ public class CategoryServiceimpl implements CategoryService {
 	     }
 		
 		
-		CategoryEntity newCategory = ConvertToEntity(request);
+		CategoryEntity newCategory = convertToEntity(request);
 		newCategory = repo.save(newCategory);
-		return ConverToResponse(newCategory);
+		return convertToResponse(newCategory);
 	}
 
-	private CategoryResponse ConverToResponse(CategoryEntity newCategory) {
-		return	CategoryResponse.builder()
-		                .categoryid(newCategory.getCategoryId())
-		                .name(newCategory.getName())
-		                .description(newCategory.getDescription())
-		                .bgcolor(newCategory.getBgcolor())
-		                .imgurl(newCategory.getImgurl())
-		                .createdAt(newCategory.getCreatedAt())
-		                .updatedAt(newCategory.getUpdatedAt())
-		                .build();
-		
+	private CategoryResponse convertToResponse(CategoryEntity entity) {
+		return CategoryResponse.builder()
+				.categoryid(entity.getCategoryId())
+				.name(entity.getName())
+				.description(entity.getDescription())
+				.bgcolor(entity.getBgcolor())
+				.imgurl(entity.getImgurl())
+				.createdAt(entity.getCreatedAt())
+				.updatedAt(entity.getUpdatedAt())
+				.build();
 	}
 
-	private CategoryEntity ConvertToEntity(CategoryRequest request) {
+	private CategoryEntity convertToEntity(CategoryRequest request) {
 		
 		return CategoryEntity.builder()
 		              .categoryId(UUID.randomUUID().toString())
@@ -64,15 +63,20 @@ public class CategoryServiceimpl implements CategoryService {
 	public List<CategoryResponse> read() {
 		           return  repo.findAll()
 				               .stream()
-				               .map(entity -> ConverToResponse(entity))
+				               .map(entity -> convertToResponse(entity))
 				               .collect(Collectors.toList());
 	}
 
 	@Override
 	public void delete(String categoryId) {
-		CategoryEntity existingCategory= repo.findByCategoryId(categoryId)
-				                        .orElseThrow(()->new RuntimeException("Category not found "+categoryId));
-				   repo.delete(existingCategory);
+		CategoryEntity entity = repo.findByCategoryId(categoryId)
+				.orElseThrow(() ->
+						new IllegalArgumentException(
+								"Category not found: " + categoryId
+						)
+				);
+
+		repo.delete(entity);
 		
 	}
 
