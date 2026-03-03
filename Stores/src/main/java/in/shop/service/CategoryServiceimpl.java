@@ -28,6 +28,7 @@ public class CategoryServiceimpl implements CategoryService {
 	         throw new RuntimeException("Category already exists: " + request.getName());
 	     }
 		
+		
 		CategoryEntity newCategory = ConvertToEntity(request);
 		newCategory = repo.save(newCategory);
 		return ConverToResponse(newCategory);
@@ -35,7 +36,7 @@ public class CategoryServiceimpl implements CategoryService {
 
 	private CategoryResponse ConverToResponse(CategoryEntity newCategory) {
 		return	CategoryResponse.builder()
-		                .categoryid(newCategory.getCategoryid())
+		                .categoryid(newCategory.getCategoryId())
 		                .name(newCategory.getName())
 		                .description(newCategory.getDescription())
 		                .bgcolor(newCategory.getBgcolor())
@@ -49,10 +50,11 @@ public class CategoryServiceimpl implements CategoryService {
 	private CategoryEntity ConvertToEntity(CategoryRequest request) {
 		
 		return CategoryEntity.builder()
-		              .categoryid(UUID.randomUUID().toString())
+		              .categoryId(UUID.randomUUID().toString())
 		              .name(request.getName())
 		              .description(request.getDescription())
 		              .bgcolor(request.getBgcolor())
+		              .imgurl(request.getImgurl())
 		              .build();
 		              
 		 

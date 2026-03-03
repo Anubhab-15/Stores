@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class CategoryRequest {
-	    private String name;
-	    private String description;
-	    private String bgcolor;
-	    private String imgurl;
+@NoArgsConstructor
+public class AuthRequest {
+
+    private String email;
+	
+    private String password;
 }

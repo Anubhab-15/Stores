@@ -4,11 +4,12 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import in.shop.entity.CategoryEntity;
 
-public interface CategoryRepo extends JpaRepository<CategoryEntity, Long>{
+import in.shop.entity.UserEntity;
+
+public interface CategoryRepo extends JpaRepository<UserEntity, Long>{
 
 	 boolean existsByName(String name);
 	 
-	 Optional<CategoryEntity> findByCategoryId(String categoryId );
+	 Optional<UserEntity> findByCategoryId(String categoryId );
 }
